@@ -24,32 +24,34 @@ function love.load()
 end
 
 function love.update(dt)
-    if love.keyboard.isDown('d') then                    -- When the player presses and holds down the "D" button:
+    --controls right/left movement
+    if love.keyboard.isDown('d') then                   
         if player.x < (love.graphics.getWidth()-player.sprite:getWidth()) then
-		    player.x = player.x + (player.speed * dt)    -- The player moves to the right
+		    player.x = player.x + (player.speed * dt)   
         end
-	elseif love.keyboard.isDown('a') then                -- When the player presses and holds down the "A" button:
+	elseif love.keyboard.isDown('a') then              
         if player.x > 0 then
-		    player.x = player.x - (player.speed * dt)    -- The player moves to the left.
+		    player.x = player.x - (player.speed * dt)   
         end
 	end
 
-    if love.keyboard.isDown('space') then                     -- Whenever the player presses or holds down the Spacebar:
+    --controls space jump movement
+    if love.keyboard.isDown('space') then                    
         if player.y_velocity == 0 then
-            player.y_velocity = player.jumpheight    -- The player's Y-Axis Velocity is set to it's Jump Height.
+            player.y_velocity = player.jumpheight  
         end
     end
 
-    -- This is in charge of the jump physics.
-    if player.y_velocity ~= 0 then                                     -- The game checks if player has "jumped" and left the ground.
-        player.y = player.y + player.y_velocity * dt                -- This makes the character ascend/jump.
-        player.y_velocity = player.y_velocity - player.gravity * dt -- This applies the gravity to the character.
+    --jump physics
+    if player.y_velocity ~= 0 then                                 
+        player.y = player.y + player.y_velocity * dt             
+        player.y_velocity = player.y_velocity - player.gravity * dt 
     end
-        
-        -- This is in charge of collision, making sure that the character lands on the ground.
-    if player.y > player.ground then    -- The game checks if the player has jumped.
-        player.y_velocity = 0       -- The Y-Axis Velocity is set back to 0 meaning the character is on the ground again.
-        player.y = player.ground    -- The Y-Axis Velocity is set back to 0 meaning the character is on the ground again.
+    
+    --ground collisions
+    if player.y > player.ground then  
+        player.y_velocity = 0   
+        player.y = player.ground  
     end
 end
 
